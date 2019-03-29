@@ -28,6 +28,9 @@ bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
+    var test = setInterval(function() {
+        http.get("http://milka-bot.herokuapp.com");
+    }, 300000);
 });
 let timer = 7200;
 var j;
