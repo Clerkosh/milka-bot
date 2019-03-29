@@ -4,6 +4,9 @@
   "description": "Milka Reminder bot",
   "main": "bot.js",
   "author": "Bibi",
+  "scripts": {
+		"start": "node bot.js"
+	},
   "dependencies": {
     "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
     "node-schedule": "^1.3.2",
