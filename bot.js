@@ -33,7 +33,7 @@ bot.on('ready', function (evt) {
     }, 300000);
 });
 let timer = 7200;
-var j;
+var j, k;
 bot.on('message', function (user, userID, channelID, message, evt) {
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
@@ -93,7 +93,32 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 j.cancel();
                 timer=0;
             break;
-
+            case 'przypomnij':
+                var tekst = args[1];
+                var data = args[1].split(".");
+                var godzina = args[2].split(":");
+                var date = new Date(data[2],data[1]-1,data[0],godzina[0],godzina[1],0);
+                var wynik = "";
+                for(var i=3;i<args.length;i++){
+                    wynik += args[i] + " ";
+                }
+                bot.sendMessage({
+                    to: "561172885922775079",
+                    message: "Przypomnienie '**"+ wynik +"**' ustawione na **" + tekst + "**!", 
+                });
+                k = schedule.scheduleJob(date, function(){
+                    bot.sendMessage({
+                        to: "561172885922775079",
+                        message: "@everyone Przypomnienie!: "+ wynik, 
+                    });
+                });
+            break;
+            case 'help':
+                bot.sendMessage({
+                    to: "561172885922775079",
+                    message: "```\ntest\ntest2\n```", 
+                });
+            break;    
             // Just add any case commands if you want to..
          }
      }
