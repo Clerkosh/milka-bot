@@ -1,0 +1,12 @@
+{
+  "name": "milka-bot",
+  "version": "1.0.0",
+  "description": "Milka Reminder bot",
+  "main": "bot.js",
+  "author": "Bibi",
+  "dependencies": {
+    "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+    "node-schedule": "^1.3.2",
+    "winston": "^3.2.1"
+  }
+}
