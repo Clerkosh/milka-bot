@@ -33,13 +33,12 @@ bot.on('ready', function (evt) {
     }, 300000);
 });
 let timer = 7200;
-var j, k;
+var j;
 bot.on('message', function (user, userID, channelID, message, evt) {
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
-       
-        args = args.splice(1);
+        
         switch(cmd) {
             // !ping
             case 'ping':
@@ -49,37 +48,38 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 });
             break;
             case 'start':
-            bot.sendMessage({
-                to: "561172885922775079",
-                message: "ROZPOCZĘTO ODLICZANIE!!! ZA 2H WYJŚĆ ZE MNĄ!"
-            });
-            j = schedule.scheduleJob('*/1 * * * * *', function(){
-                console.log(timer);
-                timer = timer-1;
-                if(timer == 0){
-                    bot.sendMessage({
-                        to: "561172885922775079",
-                        message: "@everyone Wyjdź ktoś ze mną!"
-                    });
-                    bot.sendMessage({
-                        to: "561172885922775079",
-                        message: "Wyjdź ktoś ze mną!",
-                        tts: true,
-                    });
-                    timer = 7200;
-                }
-            });
+                timer = 7200;
+                bot.sendMessage({
+                    to: "561172885922775079",
+                    message: "ROZPOCZĘTO ODLICZANIE!!! ZA 2H WYJŚĆ ZE MNĄ!"
+                });
+                j = schedule.scheduleJob('*/1 * * * * *', function(){
+                    console.log(timer);
+                    timer = timer-1;
+                    if(timer == 0){
+                        bot.sendMessage({
+                            to: "561172885922775079",
+                            message: "@everyone Wyjdź ktoś ze mną!"
+                        });
+                        bot.sendMessage({
+                            to: "561172885922775079",
+                            message: "Wyjdź ktoś ze mną!",
+                            tts: true,
+                        });
+                        timer = 7200;
+                    }
+                });
             break;
             case 'cd':
-            bot.sendMessage({
-                to: "561172885922775079",
-                message: "** Pozostało: **"+ Math.floor(timer/3600).toString() + ":"+Math.floor((timer/60)%60)+":"+Math.floor(timer%60).toString(), 
-            });
+                bot.sendMessage({
+                    to: "561172885922775079",
+                    message: "** Pozostało: **"+ Math.floor(timer/3600).toString() + ":"+Math.floor((timer/60)%60)+":"+Math.floor(timer%60).toString(), 
+                });
             break;
             case 'stop':
                 bot.sendMessage({
                     to: "561172885922775079",
-                    message: "Odliczanie przerwane...", 
+                    message: "Odliczanie przerwane... !start, aby zacząć od nowa", 
                 });
                 j.cancel();
             break;
@@ -94,9 +94,9 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 }
                 bot.sendMessage({
                     to: "561172885922775079",
-                    message: "Przypomnienie '**"+ wynik +"**' ustawione na **" + tekst + "**!", 
+                    message: "Przypomnienie **"+ wynik +"** ustawione na **" + tekst + "**!", 
                 });
-                k = schedule.scheduleJob(date, function(){
+                var k = schedule.scheduleJob(date, function(){
                     bot.sendMessage({
                         to: "561172885922775079",
                         message: "@everyone Przypomnienie!: "+ wynik, 
@@ -106,10 +106,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'help':
                 bot.sendMessage({
                     to: "561172885922775079",
-                    message: "```\ntest\ntest2\n```", 
+                    message: "Dostępne komendy:\n```\n**!start**\n**!cd** ( wyświetla stan timera )"+
+                            "\n**!stop**\n**!przypomnij <dd.mm.rrrr><gg:mm><tekst>** ( przypomnienie na daną datę )\n```", 
                 });
             break;    
             // Just add any case commands if you want to..
-         }
+         } 
      }
 });
