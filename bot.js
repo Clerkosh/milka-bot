@@ -49,7 +49,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 });
             break;
             case 'start':
-            timer=7200;
             bot.sendMessage({
                 to: "561172885922775079",
                 message: "ROZPOCZĘTO ODLICZANIE!!! ZA 2H WYJŚĆ ZE MNĄ!"
@@ -80,18 +79,9 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'stop':
                 bot.sendMessage({
                     to: "561172885922775079",
-                    message: "Odliczanie przerwane... Napisz !start, aby rozpocząć nowe odliczanie!", 
+                    message: "Odliczanie przerwane...", 
                 });
                 j.cancel();
-                timer=0;
-            break;
-            case 'ktojestmistrzem':
-                bot.sendMessage({
-                    to: "561172885922775079",
-                    message: "Pan Tomuś :)", 
-                });
-                j.cancel();
-                timer=0;
             break;
             case 'przypomnij':
                 var tekst = args[1];
