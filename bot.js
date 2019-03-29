@@ -1,3 +1,4 @@
+const http = require('http');
 var Discord = require('discord.io');
 var logger = require('winston');
 var auth = require('./auth.json');
@@ -13,6 +14,11 @@ var bot = new Discord.Client({
    token: auth.token,
    autorun: true
 });
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello World\n');
+  });
 var server_port = process.env.YOUR_PORT || process.env.PORT || 80;
 var server_host = process.env.YOUR_HOST || '0.0.0.0';
 server.listen(server_port, server_host, function() {
