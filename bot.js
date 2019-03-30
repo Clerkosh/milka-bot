@@ -70,9 +70,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                             message: "@everyone SZCZAĆ MI SIĘ CHCĘ!!!",
                             file: "szczac.gif"
                         });
-                        if(arg1 != null){
-                            timer = arg1*60;
-                        }else timer = 7200;
+                        timer = 7200;
                     }
                 });
             break;
