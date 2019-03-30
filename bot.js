@@ -48,7 +48,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 });
             break;
             case 'start':
-                timer = 7200;
+                let arg1 = args[1];
+                if(arg1 != null){
+                    timer = arg1;
+                }else timer = 7200;
                 bot.sendMessage({
                     to: "561172885922775079",
                     message: "**ROZPOCZĘTO ODLICZANIE!!! ZA 2H WYJŚĆ ZE MNĄ!**"
@@ -67,7 +70,9 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                             message: "@everyone SZCZAĆ MI SIĘ CHCĘ!!!",
                             file: "szczac.gif"
                         });
-                        timer = 7200;
+                        if(arg1 != null){
+                            timer = arg1;
+                        }else timer = 7200;
                     }
                 });
             break;
