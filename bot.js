@@ -113,8 +113,8 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'help':
                 bot.sendMessage({
                     to: "561172885922775079",
-                    message: "Dostępne komendy:\n```\n**!start**\n**!cd** ( wyświetla stan timera )"+
-                            "\n**!stop**\n**!przypomnij <dd.mm.rrrr><gg:mm><tekst>** ( przypomnienie na daną datę )\n```", 
+                    message: "Dostępne komendy:\n```\n!start [ile w sekundach]\n!cd ( wyświetla stan timera )"+
+                            "\n!stop\n!przypomnij <dd.mm.rrrr><gg:mm><tekst> ( przypomnienie na daną datę )\n```", 
                 });
             break;    
             // Just add any case commands if you want to..
