@@ -51,7 +51,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 timer = 7200;
                 bot.sendMessage({
                     to: "561172885922775079",
-                    message: "ROZPOCZĘTO ODLICZANIE!!! ZA 2H WYJŚĆ ZE MNĄ!"
+                    message: "**ROZPOCZĘTO ODLICZANIE!!! ZA 2H WYJŚĆ ZE MNĄ!**"
                 });
                 j = schedule.scheduleJob('*/1 * * * * *', function(){
                     console.log(timer);
@@ -59,12 +59,13 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     if(timer == 0){
                         bot.sendMessage({
                             to: "561172885922775079",
-                            message: "@everyone Wyjdź ktoś ze mną!"
-                        });
-                        bot.sendMessage({
-                            to: "561172885922775079",
-                            message: "Wyjdź ktoś ze mną!",
+                            message: "SZCZAĆ MI SIĘ CHCĘ!!!",
                             tts: true,
+                        });
+                        bot.uploadFile({
+                            to: "561172885922775079",
+                            message: "@everyone SZCZAĆ MI SIĘ CHCĘ!!!",
+                            file: "szczac.gif"
                         });
                         timer = 7200;
                     }
@@ -77,9 +78,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 });
             break;
             case 'stop':
-                bot.sendMessage({
+                bot.uplaodFile({
                     to: "561172885922775079",
-                    message: "Odliczanie przerwane... !start, aby zacząć od nowa", 
+                    message: "Już mi się nie chcę... dziękuję bardzo.", 
+                    file: "juznie.gif"
                 });
                 j.cancel();
             break;
@@ -94,12 +96,12 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 }
                 bot.sendMessage({
                     to: "561172885922775079",
-                    message: "Przypomnienie **"+ wynik +"** ustawione na **" + tekst + "**!", 
+                    message: "Przypomnienie **"+ wynik +"** ustawione na **" + tekst + "** o godzinie **"+args[2]+"**!", 
                 });
                 var k = schedule.scheduleJob(date, function(){
                     bot.sendMessage({
                         to: "561172885922775079",
-                        message: "@everyone Przypomnienie!: "+ wynik, 
+                        message: "@everyone Przypomnienie!: **"+ wynik+"**", 
                     });
                 });
             break;
