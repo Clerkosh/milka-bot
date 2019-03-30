@@ -50,7 +50,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'start':
                 let arg1 = args[1];
                 if(arg1 != null){
-                    timer = arg1;
+                    timer = arg1*60;
                 }else timer = 7200;
                 bot.sendMessage({
                     to: "561172885922775079",
@@ -71,7 +71,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                             file: "szczac.gif"
                         });
                         if(arg1 != null){
-                            timer = arg1;
+                            timer = arg1*60;
                         }else timer = 7200;
                     }
                 });
@@ -113,7 +113,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'help':
                 bot.sendMessage({
                     to: "561172885922775079",
-                    message: "Dostępne komendy:\n```\n!start [ile w sekundach]\n!cd ( wyświetla stan timera )"+
+                    message: "Dostępne komendy:\n```\n!start [ile w minutach]\n!cd ( wyświetla stan timera )"+
                             "\n!stop\n!przypomnij <dd.mm.rrrr><gg:mm><tekst> ( przypomnienie na daną datę )\n```", 
                 });
             break;    
