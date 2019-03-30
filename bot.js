@@ -83,7 +83,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 });
             break;
             case 'stop':
-                bot.uplaodFile({
+                bot.uploadFile({
                     to: "561172885922775079",
                     message: "Już mi się nie chcę... dziękuję bardzo.", 
                     file: "juznie.gif"
