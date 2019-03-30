@@ -54,7 +54,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 }else timer = 7200;
                 bot.sendMessage({
                     to: "561172885922775079",
-                    message: "**ROZPOCZĘTO ODLICZANIE!!! ZA 2H WYJŚĆ ZE MNĄ!**"
+                    message: "**ROZPOCZĘTO ODLICZANIE!!! ZA " + Math.floor(timer/3600).toString() + ":"+Math.floor((timer/60)%60)+":"+Math.floor(timer%60).toString() +" WYJŚĆ ZE MNĄ!**"
                 });
                 j = schedule.scheduleJob('*/1 * * * * *', function(){
                     console.log(timer);
