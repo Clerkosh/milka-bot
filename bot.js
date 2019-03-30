@@ -77,10 +77,17 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 });
             break;
             case 'cd':
-                bot.sendMessage({
-                    to: "561172885922775079",
-                    message: "** Pozostało: **"+ Math.floor(timer/3600).toString() + ":"+Math.floor((timer/60)%60)+":"+Math.floor(timer%60).toString(), 
-                });
+                if(timer != 0){
+                    bot.sendMessage({
+                        to: "561172885922775079",
+                        message: "** Pozostało: **"+ Math.floor(timer/3600).toString() + ":"+Math.floor((timer/60)%60)+":"+Math.floor(timer%60).toString(), 
+                    });
+                }else {
+                    bot.sendMessage({
+                        to: "561172885922775079",
+                        message: "Timer nie jest włączony.", 
+                    });
+                }
             break;
             case 'stop':
                 bot.uploadFile({
