@@ -55,7 +55,7 @@ bot.on('ready', function (evt) {
     }, 300000);
 });
 let timer = 7200;
-var j;
+var j, zaczeto=false;
 bot.on('message', function (user, userID, channelID, message, evt) {
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
@@ -71,29 +71,38 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             break;
             case 'start':
                 if(j!=null) j.cancel();
-                let arg1 = args[1];
-                if(arg1 != null){
-                    timer = arg1*60;
-                }else timer = 7200;
+                if(zaczeto){
+                    let arg1 = args[1];
+                    if(arg1 != null){
+                        timer = arg1*60;
+                    }else timer = 7200;   
+                }else{
+                    let arg1 = args[1];
+                    if(arg1 != null){
+                        timer = arg1*60;
+                    }else timer = 7200;
+                    j = schedule.scheduleJob('*/1 * * * * *', function(){
+                        console.log(timer);
+                        timer = timer-1;
+                        if(timer == 0){
+                            bot.sendMessage({
+                                to: "561172885922775079",
+                                message: "SZCZAĆ MI SIĘ CHCĘ!!!",
+                                tts: true,
+                            });
+                            bot.uploadFile({
+                                to: "561172885922775079",
+                                message: "@everyone SZCZAĆ MI SIĘ CHCĘ!!!",
+                                file: "szczac.gif"
+                            });
+                            timer = 7200;
+                        }
+                    });
+                    zaczeto=true;
+                }
                 bot.sendMessage({
                     to: "561172885922775079",
                     message: "**ROZPOCZĘTO ODLICZANIE!!! ZA " + Math.floor(timer/3600).toString() + ":"+Math.floor((timer/60)%60)+":"+Math.floor(timer%60).toString() +" WYJŚĆ ZE MNĄ!**"
-                });
-                j = schedule.scheduleJob('*/1 * * * * *', function(){
-                    timer = timer-1;
-                    if(timer == 0){
-                        bot.sendMessage({
-                            to: "561172885922775079",
-                            message: "SZCZAĆ MI SIĘ CHCĘ!!!",
-                            tts: true,
-                        });
-                        bot.uploadFile({
-                            to: "561172885922775079",
-                            message: "@everyone SZCZAĆ MI SIĘ CHCĘ!!!",
-                            file: "szczac.gif"
-                        });
-                        timer = 7200;
-                    }
                 });
             break;
             case 'cd':
