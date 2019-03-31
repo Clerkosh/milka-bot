@@ -48,6 +48,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 });
             break;
             case 'start':
+                if(j!=null) j.cancel();
                 let arg1 = args[1];
                 if(arg1 != null){
                     timer = arg1*60;
@@ -94,6 +95,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     file: "juznie.gif"
                 });
                 j.cancel();
+                timer=0;
             break;
             case 'przypomnij':
                 var tekst = args[1];
@@ -101,6 +103,8 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 var godzina = args[2].split(":");
                 var date = new Date(data[2],data[1]-1,data[0],godzina[0],godzina[1],0);
                 var wynik = "";
+                console.log(godzina[0]+":"+godzina[1]);
+                logger.info(date);
                 for(var i=3;i<args.length;i++){
                     wynik += args[i] + " ";
                 }
