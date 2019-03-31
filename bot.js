@@ -49,7 +49,7 @@ bot.on('ready', function (evt) {
                 fs.writeFileSync('przypomnienia.txt', newValue, 'utf-8');
             }
         }
-    },1000);
+    },60000);
     var test = setInterval(function() {
         http.get("http://milka-bot.herokuapp.com");
     }, 300000);
