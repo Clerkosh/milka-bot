@@ -3,6 +3,8 @@ var Discord = require('discord.io');
 var logger = require('winston');
 var auth = require('./auth.json');
 var schedule = require('node-schedule');
+var fs = require('fs');
+
 // Configure logger settings
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
@@ -103,11 +105,13 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 var godzina = args[2].split(":");
                 var date = new Date(data[2],data[1]-1,data[0],godzina[0],godzina[1],0);
                 var wynik = "";
-                console.log(godzina[0]+":"+godzina[1]);
-                logger.info(date);
                 for(var i=3;i<args.length;i++){
-                    wynik += args[i] + " ";
+                    wynik += args[i];
                 }
+                var linia = tekst + ";" + args[2] + ";" + wynik+" ";
+                var stream = fs.createWriteStream("przypomnienia.txt", {flags:'a'});
+                stream.write(linia);
+                
                 bot.sendMessage({
                     to: "561172885922775079",
                     message: "Przypomnienie **"+ wynik +"** ustawione na **" + tekst + "** o godzinie **"+args[2]+"**!", 
@@ -115,9 +119,25 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 var k = schedule.scheduleJob(date, function(){
                     bot.sendMessage({
                         to: "561172885922775079",
-                        message: "@everyone Przypomnienie!: **"+ wynik+"**", 
+                        message: "@"+message.userID+" Przypomnienie!: **"+ wynik+"**", 
                     });
                 });
+            break;
+            case 'przypomnienia':
+                var przypomnienia;
+                przypomnienia = fs.readFileSync("przypomnienia.txt", 'utf8');
+                    let przyp = przypomnienia.split(" ");
+                    for(var j = 0; j<przyp.length-1; j++){
+                        console.log(przyp[j]);
+                        var linia = przyp[j].split(";");
+                        var data = linia[0];
+                        var godzina = linia[1];
+                        var tekst = linia[2];
+                        bot.sendMessage({
+                            to: "561172885922775079",
+                            message: j+1+". **"+tekst+"** - "+data+" o godzinie " +godzina +"\n", 
+                        });
+                    }
             break;
             case 'help':
                 bot.sendMessage({
