@@ -31,6 +31,7 @@ bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
+    /*
     stream = fs.createWriteStream("przypomnienia.txt", {flags:'a'});
     var przypomnienia_remover = setInterval(function(){
         var data = fs.readFileSync('przypomnienia.txt', 'utf-8');
@@ -50,6 +51,7 @@ bot.on('ready', function (evt) {
             }
         }
     },60000);
+    */
     var test = setInterval(function() {
         http.get("http://milka-bot.herokuapp.com");
     }, 300000);
