@@ -26,10 +26,30 @@ var server_host = process.env.YOUR_HOST || '0.0.0.0';
 server.listen(server_port, server_host, function() {
     console.log('Listening on port %d', server_port);
 });
+var stream;
 bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
+    stream = fs.createWriteStream("przypomnienia.txt", {flags:'a'});
+    var przypomnienia_remover = setInterval(function(){
+        var data = fs.readFileSync('przypomnienia.txt', 'utf-8');
+        data2 = data.split(" ");
+        var tmp2 = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        var tmp = tmp2.split(" ");
+        var dejta = tmp[0].split("-");
+        var tajm = tmp[1].split(":");
+        var godz = parseInt(tajm[0])+2;
+        var string = dejta[2]+"."+dejta[1]+"."+dejta[0]+";"+godz+":"+tajm[1];
+        //console.log(string); --> current date and time;
+        for(var i=0;i<data2.length;i++){
+            if(data2[i].includes(string))
+            {
+                var newValue = data.replace(data2[i].toString()+"  ", '');
+                fs.writeFileSync('przypomnienia.txt', newValue, 'utf-8');
+            }
+        }
+    },1000);
     var test = setInterval(function() {
         http.get("http://milka-bot.herokuapp.com");
     }, 300000);
@@ -60,7 +80,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     message: "**ROZPOCZĘTO ODLICZANIE!!! ZA " + Math.floor(timer/3600).toString() + ":"+Math.floor((timer/60)%60)+":"+Math.floor(timer%60).toString() +" WYJŚĆ ZE MNĄ!**"
                 });
                 j = schedule.scheduleJob('*/1 * * * * *', function(){
-                    console.log(timer);
                     timer = timer-1;
                     if(timer == 0){
                         bot.sendMessage({
@@ -109,7 +128,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     wynik += args[i];
                 }
                 var linia = tekst + ";" + args[2] + ";" + wynik+" ";
-                var stream = fs.createWriteStream("przypomnienia.txt", {flags:'a'});
                 stream.write(linia);
                 
                 bot.sendMessage({
@@ -119,7 +137,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 var k = schedule.scheduleJob(date, function(){
                     bot.sendMessage({
                         to: "561172885922775079",
-                        message: "@"+message.userID+" Przypomnienie!: **"+ wynik+"**", 
+                        message: "@everyone Przypomnienie!: **"+ wynik+"**", 
                     });
                 });
             break;
@@ -128,7 +146,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 przypomnienia = fs.readFileSync("przypomnienia.txt", 'utf8');
                     let przyp = przypomnienia.split(" ");
                     for(var j = 0; j<przyp.length-1; j++){
-                        console.log(przyp[j]);
                         var linia = przyp[j].split(";");
                         var data = linia[0];
                         var godzina = linia[1];
@@ -143,7 +160,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 bot.sendMessage({
                     to: "561172885922775079",
                     message: "Dostępne komendy:\n```\n!start [ile w minutach]\n!cd ( wyświetla stan timera )"+
-                            "\n!stop\n!przypomnij <dd.mm.rrrr><gg:mm><tekst> ( przypomnienie na daną datę )\n```", 
+                            "\n!stop\n!przypomnij <dd.mm.rrrr><gg:mm><tekst> ( przypomnienie na daną datę )\n!przypomnienia\n```", 
                 });
             break;    
             // Just add any case commands if you want to..
