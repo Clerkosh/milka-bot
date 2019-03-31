@@ -124,7 +124,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     message: "Już mi się nie chcę... dziękuję bardzo.", 
                     file: "juznie.gif"
                 });
-                j.cancel();
+                if(j!=null) j.cancel();
                 timer=0;
             break;
             case 'przypomnij':
